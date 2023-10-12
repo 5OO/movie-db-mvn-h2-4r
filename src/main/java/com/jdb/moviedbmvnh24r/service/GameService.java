@@ -19,41 +19,52 @@ public class GameService {
 
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please choose the category: ");
-        System.out.println("1 - vote_average, 2 - popularity, 3 - runtime, 4 - revenue): ");
-
-        int category;
+        String choice;
         do {
-            category = scanner.nextInt();
-            if (category < 1 || category > 4) {
-                System.out.println("Invalid category selection. Please choose a number between 1 and 4.");
+
+            System.out.println("Please choose the category: ");
+            System.out.println("1 - vote_average, 2 - popularity, 3 - runtime, 4 - revenue: ");
+
+            int category;
+            do {
+                category = scanner.nextInt();
+                if (category < 1 || category > 4) {
+                    System.out.println("Invalid category selection. Please choose a number between 1 and 4.");
+                }
+            } while (category < 1 || category > 4);
+
+            // select two movies
+
+            Movie firstMovie = getRandomMovie();
+            Movie secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
+
+            // asking for evaluation Higher or Lower
+
+            while (true) {
+                displayMovieComparison(firstMovie, secondMovie);
+
+                System.out.println("Has the second film higher or lower " + category + " value ? ");
+                System.out.println("Enter 8 for 'higher' or 2 for 'lower') ");
+                int answer;
+                do {
+                    answer = scanner.nextInt();
+                    if (answer != 8 && answer != 2) {
+                        System.out.println("Invalid choice! Please enter 8 for 'higher' or 2 for 'lower'.");
+                    }
+                } while (answer != 8 && answer != 2);
+
+                if (isAnswerCorrect(firstMovie, secondMovie, category, answer)) {
+                    System.out.println(" Yes! Correct Answer! ");
+                    firstMovie = secondMovie;
+                    secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
+                } else {
+                    System.out.println(" Wrong answer! Game is OVER!");
+                    break;
+                }
             }
-        } while (category < 1 || category > 4);
-
-        // select two movies
-
-        Movie firstMovie = getRandomMovie();
-        Movie secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
-
-        // asking for evaluation Higher or Lower
-
-        while (true) {
-            displayMovieComparison(firstMovie, secondMovie);
-
-            System.out.println("Has the second film higher or lower "+ category +" value ? ");
-            System.out.println("Enter 8 for 'higher' or 2 for 'lower') ");
-            int answer = scanner.nextInt();
-
-            if (isAnswerCorrect(firstMovie, secondMovie, category, answer)) {
-                System.out.println(" Yes! Correct Answer! ");
-                firstMovie = secondMovie;
-                secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
-            } else {
-                System.out.println(" Wrong answer! Game is OVER!");
-                break;
-            }
-        }
+            System.out.println("Would you like to play again? (Y/N)");
+            choice = scanner.next().toLowerCase();
+        } while ("y".equals(choice));
     }
 
     private Movie getRandomMovie() {
