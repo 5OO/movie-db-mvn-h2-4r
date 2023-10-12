@@ -22,6 +22,8 @@ public class GameService {
         String choice;
         do {
 
+            int score = 0;
+
             System.out.println("Please choose the category: ");
             System.out.println("1 - vote_average, 2 - popularity, 3 - runtime, 4 - revenue: ");
 
@@ -54,7 +56,9 @@ public class GameService {
                 } while (answer != 8 && answer != 2);
 
                 if (isAnswerCorrect(firstMovie, secondMovie, category, answer)) {
+                    score++;
                     System.out.println(" Yes! Correct Answer! ");
+                    System.out.println("Current score: " + score);
                     firstMovie = secondMovie;
                     secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
                 } else {
