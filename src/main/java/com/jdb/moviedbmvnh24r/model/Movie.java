@@ -49,13 +49,4 @@ public class Movie {
 
     @Column(name = "vote_count", nullable = false)
     private Integer voteCount;
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void getOriginalTitle() {
-        System.out.println( " siin on movie.java string ");
-    }
 }
