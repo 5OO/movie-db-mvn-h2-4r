@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,9 +14,13 @@ import java.util.Scanner;
 @Service
 public class GameService {
     private Random random = new Random();
+    private List<Movie> shuffeledMovies = null;
+    private int index = 0;
 
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieRepository movieRepository;
 
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
@@ -74,8 +79,12 @@ public class GameService {
     }
 
     private Movie getRandomMovie() {
-        List<Movie> allMovies = movieService.findAllMovies();
-        return allMovies.get(this.random.nextInt(allMovies.size()));
+        if (shuffeledMovies == null || index >= shuffeledMovies.size()) {
+            shuffeledMovies = movieService.findAllMovies();
+            Collections.shuffle(shuffeledMovies);
+            index = 0;
+        }
+        return shuffeledMovies.get(index++);
     }
 
     private Movie getRandomMovieWhileDifferentFrom(Movie firstMovie) {
