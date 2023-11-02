@@ -15,7 +15,8 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie findMovieById(Long id) {
-        return movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie not found with id: " + id));
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found with id: " + id));
     }
 
     public List<Movie> findAllMovies() {
