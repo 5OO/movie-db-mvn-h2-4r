@@ -15,7 +15,7 @@ public class GameService {
     private Random random = new Random();
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieService movieService;
 
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
@@ -74,7 +74,7 @@ public class GameService {
     }
 
     private Movie getRandomMovie() {
-        List<Movie> allMovies = movieRepository.findAll();
+        List<Movie> allMovies = movieService.findAllMovies();
         return allMovies.get(this.random.nextInt(allMovies.size()));
     }
 
