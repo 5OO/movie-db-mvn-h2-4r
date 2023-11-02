@@ -2,6 +2,7 @@ package com.jdb.moviedbmvnh24r.service;
 
 import com.jdb.moviedbmvnh24r.model.Movie;
 import com.jdb.moviedbmvnh24r.repository.MovieRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie findMovieById(Long id) {
-        return movieRepository.findById(id).orElse(null);
+        return movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie not found with id: " + id));
     }
 
     public List<Movie> findAllMovies() {
