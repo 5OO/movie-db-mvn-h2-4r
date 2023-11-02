@@ -20,9 +20,10 @@ public class GameService {
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
         String choice;
+        int score = 0;
         do {
 
-            int score = 0;
+
 
             System.out.println("Please choose the category: ");
             System.out.println("1 - vote_average, 2 - popularity, 3 - runtime, 4 - revenue: ");
@@ -62,13 +63,14 @@ public class GameService {
                     firstMovie = secondMovie;
                     secondMovie = getRandomMovieWhileDifferentFrom(firstMovie);
                 } else {
-                    System.out.println(" Wrong answer! Game is OVER!");
+                    System.out.println(" Wrong answer! Game is OVER!\r\n Your score was:" + score);
                     break;
                 }
             }
             System.out.println("Would you like to play again? (Y/N)");
             choice = scanner.next().toLowerCase();
         } while ("y".equals(choice));
+        System.out.println("Bye! Your score was: " + score + "\r\nCU!");
     }
 
     private Movie getRandomMovie() {
